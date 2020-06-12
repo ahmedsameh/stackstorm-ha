@@ -21,11 +21,9 @@ metadata:
     {{- end }}
 spec:
   rules:
-  {{- range .Values.ingress.hosts }}
-  - host: {{ .host }}
-    http:
-      paths:
-      {{- range .paths }}
+  {{- range .Values.ingress.paths }}
+  - http:
+      paths:      
         - path: {{ default "/*" .path }}
           backend:
             serviceName: {{ .serviceName }}
@@ -45,5 +43,4 @@ spec:
   {{- if .Values.ingress.tls }}
   tls:
 {{ toYaml .Values.ingress.tls | indent 4 }}
-  {{- end -}}
 {{- end }}
